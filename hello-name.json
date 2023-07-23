@@ -1,0 +1,95 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "HelloName-API",
+    "description": "Hello Name",
+    "x-ibm-annotations": "true",
+    "x-ibm-application-name": "Hello Name Example",
+    "x-ibm-application-id": "hello-name-example-app",
+    "x-ibm-skill-type": "imported",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://ojnlvnhry9.execute-api.us-west-1.amazonaws.com/prod/"
+    }
+  ],
+  "security": [
+    {
+      "basic_auth": []
+    }
+  ],
+  "paths": {
+    "/hello-name": {
+      "post": {
+        "operationId": "posthellowname",
+        "summary": "Hello Name",
+        "requestBody": {
+          "description": "Watson greets you with a custom name",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/prompt_for_name"
+              }
+            }
+          },
+          "required": false
+        },
+        "responses": {
+          "200": {
+            "description": "200 response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/output"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "prompt_for_name": {
+        "type": "object",
+        "properties": {
+          "body": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Jay"
+              }
+            }
+          }
+        }
+      },
+      "output": {
+        "type": "object",
+        "properties": {
+          "statusCode": {
+            "$ref": "#/components/schemas/statusCode"
+          },
+          "greeting": {
+            "type": "string",
+            "example": "Hello Jay"
+          }
+        }
+      },
+      "statusCode": {
+        "type": "integer",
+        "format": "int32",
+        "example": 200,
+        "x-ibm-show": false
+      }
+    },
+    "securitySchemes": {
+      "basic_auth": {
+        "type": "http",
+        "scheme": "basic"
+      }
+    }
+  }
+}
